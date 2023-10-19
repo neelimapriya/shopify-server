@@ -29,7 +29,34 @@ async function run() {
     await client.connect();
 
 
+    const brandCollection=client.db('ProductDB').collection('brand')
+    const productCollection=client.db('ProductDB').collection('product')
 
+
+    // get brand
+    app.get('/brand', async(req,res)=>{
+        const cursor=brandCollection.find();
+        const result=await cursor.toArray();
+        // console.log(result)
+        res.send(result)
+    })
+
+    // brand card
+    app.get('/product/:brand', async(req,res)=>{
+      const brand=req.params.brand;
+      const query={brand :brand}
+      console.log(query)
+      const result= await productCollection.find(query).toArray()
+      res.send(result)
+    })
+
+
+    app.post('/product', async(req, res)=>{
+        const newProduct=req.body;
+        console.log(newProduct)
+        const result =await productCollection.insertOne(newProduct)
+        res.send(result)
+    })
 
 
 
