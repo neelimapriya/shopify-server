@@ -44,6 +44,7 @@ async function run() {
     // brand card
     app.get('/product/:brand', async(req,res)=>{
       const brand=req.params.brand;
+      console.log(brand)
       const query={brand :brand}
       console.log(query)
       const result= await productCollection.find(query).toArray()
@@ -53,7 +54,7 @@ async function run() {
 
     app.post('/product', async(req, res)=>{
         const newProduct=req.body;
-        console.log(newProduct)
+        // console.log(newProduct)
         const result =await productCollection.insertOne(newProduct)
         res.send(result)
     })
