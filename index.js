@@ -28,6 +28,7 @@ async function run() {
     const brandCollection = client.db("ProductDB").collection("brand");
     const productCollection = client.db("ProductDB").collection("product");
     const cartCollection = client.db("ProductDB").collection("cart");
+    const themeCollection = client.db("ProductDB").collection("theme");
 
     // get brand
     app.get("/brand", async (req, res) => {
@@ -117,6 +118,17 @@ async function run() {
       const result = await cartCollection.deleteOne(query);
       res.send(result);
     });
+
+    // theme advertise
+    app.get("/theme/:brand", async (req,res)=>{
+      const id =req.params.id;
+      const query = { brand: brand };
+      console.log(query)
+      const result = await themeCollection.find(query);
+      res.send(result);
+    })
+
+
 
     // Send a ping to confirm a successful connection
     // await client.db("admin").command({ ping: 1 });
